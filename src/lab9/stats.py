@@ -14,26 +14,46 @@ POS = "FAIL"   # the judge's job is to FIND failures, so FAIL is the positive cl
 
 def confusion(human: Sequence[str], judge: Sequence[str]) -> dict[str, int]:
     """tp/fp/fn/tn with FAIL as positive."""
-    # TODO M2
-    raise NotImplementedError
+    counts = {"tp": 0, "fp": 0, "fn": 0, "tn": 0}
+    for h, j in zip(human, judge, strict=True):
+        if h not in ("PASS", POS) or j not in ("PASS", POS):
+            raise ValueError("labels must be PASS or FAIL")
+        key = ("t" if h == j else "f") + ("p" if j == POS else "n")
+        counts[key] += 1
+    return counts
 
 
 def precision_recall(human: Sequence[str], judge: Sequence[str]) -> tuple[float, float]:
-    # TODO M2: precision = tp/(tp+fp), recall = tp/(tp+fn); return 0.0 when the denominator is 0
-    raise NotImplementedError
+    cm = confusion(human, judge)
+    predicted = cm["tp"] + cm["fp"]
+    actual = cm["tp"] + cm["fn"]
+    return (cm["tp"] / predicted if predicted else 0.0,
+            cm["tp"] / actual if actual else 0.0)
 
 
 def cohen_kappa(human: Sequence[str], judge: Sequence[str]) -> float:
     """kappa = (p_o - p_e) / (1 - p_e). Raise ValueError when undefined (p_e == 1):
     a constant judge has no signal and must FAIL calibration, not pass on a technicality."""
-    # TODO M2
-    raise NotImplementedError
+    cm = confusion(human, judge)
+    n = sum(cm.values())
+    if not n:
+        raise ValueError("kappa is undefined for empty labels")
+    observed = (cm["tp"] + cm["tn"]) / n
+    expected = ((cm["tp"] + cm["fn"]) * (cm["tp"] + cm["fp"])
+                + (cm["tn"] + cm["fp"]) * (cm["tn"] + cm["fn"])) / n**2
+    if expected == 1:
+        raise ValueError("kappa is undefined when expected agreement is 1")
+    return (observed - expected) / (1 - expected)
 
 
 def rogan_gladen(observed_rate: float, sensitivity: float, specificity: float) -> float:
     """Correct an observed failure rate for judge error; clip to [0, 1]."""
-    # TODO M2: (p_obs + spec - 1) / (sens + spec - 1)
-    raise NotImplementedError
+    if any(not 0 <= rate <= 1 for rate in (observed_rate, sensitivity, specificity)):
+        raise ValueError("rates must be finite values between 0 and 1")
+    denominator = sensitivity + specificity - 1
+    if denominator == 0:
+        raise ValueError("failure rate is unidentifiable when sensitivity + specificity == 1")
+    return min(1.0, max(0.0, (observed_rate + specificity - 1) / denominator))
 
 
 def paired_bootstrap(a: Sequence[float], b: Sequence[float], *, n_resamples: int = 1000,
