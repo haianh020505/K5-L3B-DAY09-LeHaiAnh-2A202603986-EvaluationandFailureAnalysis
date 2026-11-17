@@ -29,9 +29,9 @@
 
 "Giảm có ý nghĩa" = CI 95% paired bootstrap của Δ (PR − baseline) nằm hoàn toàn dưới 0.
 
-Mọi giá trị baseline ở bảng lấy từ `src/reports/baseline_v1.json`, run **E-swarm-20261118-3b21**, eval SHA **3b214571c3df**, spec **1.1**, 14 item × seed 11/22/33/44/55. Bootstrap lấy mẫu theo item với 1.000 resamples, RNG 2027. Code thống kê/harness `d1de661`, grader/spec `044816d`; xem [eval card](eval_card.md) để đối chiếu report/CI.
+Mọi giá trị baseline ở bảng lấy từ `src/reports/baseline_v1.json`, run **E-swarm-20261118-c82b**, eval SHA **c82be5e61212**, spec **1.1**, 14 item × seed 11/22/33/44/55. Bootstrap lấy mẫu theo item với 1.000 resamples, RNG 2027. Code thống kê/harness `d1de661`, grader/spec `044816d`; xem [eval card](eval_card.md) để đối chiếu report/CI.
 
-Bằng chứng release gate: fixed run **E-fixed-20261118-3b21** qua (pass_rate=1.0, Δ +0.014, CI [0,+0.043]); seeded_regression run **E-seeded_regression-20261118-3b21** bị chặn (pass_rate=0.7143, Δ −0.271, CI [−0.500,−0.057]). Cùng spec/baseline, không thay ngưỡng giữa các shape.
+Bằng chứng release gate: fixed run **E-fixed-20261118-c82b** qua (pass_rate=1.0, Δ +0.014, CI [0,+0.043]); seeded_regression run **E-seeded_regression-20261118-c82b** bị chặn (pass_rate=0.7143, Δ −0.271, CI [−0.500,−0.057]). Cùng spec/baseline, không thay ngưỡng giữa các shape.
 
 ## 4. Failure mode → grader
 | FM | Mô tả ngắn | Grader | Code hay judge | Vì sao chọn loại đó |

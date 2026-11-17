@@ -14,18 +14,18 @@ Lệnh in ra ba phần: các event trong trace (`reply`, `decision`, `model_over
 
 | Trường | Nội dung |
 |---|---|
-| Trial | `seeded_regression C-002@11`; report `src/reports/eval_seeded_regression.json`, run ID `E-seeded_regression-20261118-3b21`, row `E-002` seed 11; trace run ID `R-seeded_regression-C-002-s11`. |
+| Trial | `seeded_regression C-002@11`; report `src/reports/eval_seeded_regression.json`, run ID `E-seeded_regression-20261118-c82b`, row `E-002` seed 11; trace run ID `R-seeded_regression-C-002-s11`. |
 | Triệu chứng | Ledger ghi 20.000đ/1 refund, label yêu cầu 0đ/0 refund và denied; result lại resolved. RefundAmountCorrect, ProposalAmountCorrect và DbFactKept FAIL; Lab 8 fail `status resolved != denied`. Reply #6 báo 20.000đ khớp ledger nên riêng ReplyAmountCorrect PASS: nói đúng khoản đã ghi không chứng minh khoản đó hợp lệ. |
 | Bước sai đầu tiên | Event **#3 model_override**, payload `{"delay_days": 5}`. |
 | Vì sao là bước *đầu tiên* | #1 handoff chỉ cho phép công cụ đọc, scope owner_order_only; #2 investigator trả order O-202 đúng principal, visible=true và delay_days=2. Agent sau đó thay dữ kiện 2 ngày bằng 5 ngày từ ticket; #4 quote 20.000 là hậu quả sau bước thay dữ kiện. |
 | Failure mode | **FM-03 / ticket_trust**, layer model/prompt; xem `failure_taxonomy.md`. |
-| Đối chứng | `fixed C-002@11`, report `eval_fixed.json`, run ID `E-fixed-20261118-3b21`: #1–#2 tương đương, không có override; #3 quote amount_vnd=0, no_entitlement; #4 reply từ chối; status denied, ledger 0, các grader PASS. |
+| Đối chứng | `fixed C-002@11`, report `eval_fixed.json`, run ID `E-fixed-20261118-c82b`: #1–#2 tương đương, không có override; #3 quote amount_vnd=0, no_entitlement; #4 reply từ chối; status denied, ledger 0, các grader PASS. |
 | Regression test | `tests/test_lab9_reply_amount.py::test_seeded_c002_is_caught_by_ledger_and_fixed_passes`: cùng claim@seed/store mới; assert RefundAmountCorrect và DbFactKept FALSE trên seeded_regression, TRUE trên fixed; assert ledger lần lượt 20.000 và 0. Đã chạy thành công; trước khi triển khai grader test fail tại TODO RefundAmountCorrect. |
 | Chưa chắc chắn | Trace không cho biết suy nghĩ nội bộ của model; đây là MockLLM/công tắc xác định, không phải tỷ lệ lỗi LLM thật. Có approval hợp lệ và unexpected_rows=0 nên ApprovalBypass không gắn nhầm vi phạm approval cho case này; sai entitlement được bắt bằng label/ledger. |
 
 ## Kết quả kiểm chứng M3
 
-Spec `config/metric_spec.yaml` phiên bản **1.1**, eval set SHA `3b214571c3df`, 14 item × 5 seed (11/22/33/44/55). Report được sinh bằng `lab9.eval`, không chỉnh tay.
+Spec `config/metric_spec.yaml` phiên bản **1.1**, eval set SHA `c82be5e61212`, 14 item × 5 seed (11/22/33/44/55). Report được sinh bằng `lab9.eval`, không chỉnh tay.
 
 | Metric | fixed | seeded_regression |
 |---|---|---|

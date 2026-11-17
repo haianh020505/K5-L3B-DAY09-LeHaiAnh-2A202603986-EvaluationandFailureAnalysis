@@ -26,4 +26,5 @@ The virtual environment is ignored by Git. At M0, `failure_modes` is intentional
 - `pip check`: no broken requirements, exit 0.
 - `lab9.evalset --build`: 14 items, 14 separate labels, exit 0. Also verified unique item IDs, complete label mapping and no inline labels.
 - GitHub Actions enabled: `true` from the fork's actions permissions API.
+- M4 follow-up: the inherited fork workflow still needed initial activation despite that permissions response. Setting Actions `enabled=true` via PUT registered the workflow as active; M4 then ran CI on the Core PR.
 - Lab 9 logic/spec files unchanged. No full test suite or CI run at M0; grader/statistics TODOs remain for later tasks.

@@ -2,12 +2,12 @@
 
 ## Phiên bản và nguồn bằng chứng
 
-- Ngày đo: 2026-11-18; code bootstrap/harness `d1de661`, grader/spec `044816d`; source Day 8 gốc `034c6c421c198dae67a9211d15e2587d5a378972`.
-- Eval set **v1**, SHA **3b214571c3df**, 14 item × 5 seed **11/22/33/44/55**. Nguồn lab8_public; nhãn tách riêng tại `src/data/eval/labels_v1.json`.
+- Ngày đo: 2026-11-18; code bootstrap/harness `d1de661`, grader/spec `044816d`, chuẩn hóa LF khi sinh/checkout eval set `4b4c576`; source Day 8 gốc `034c6c421c198dae67a9211d15e2587d5a378972`.
+- Eval set **v1**, SHA **c82be5e61212**, 14 item × 5 seed **11/22/33/44/55**. Nguồn lab8_public; nhãn tách riêng tại `src/data/eval/labels_v1.json`.
 - Metric spec **1.1**, harness map **1.2**; Python **3.13.16**, pydantic-evals **2.68.0**, NumPy **2.5.5**, SciPy **1.18.1** trong môi trường local.
-- Baseline: `src/reports/baseline_v1.json`, **E-swarm-20261118-3b21**. Lượt chạy PR swarm độc lập `eval_pr.json` có cùng run ID vì tên được suy từ shape/ngày/SHA; `ci_check` xác nhận metrics trùng baseline. Run ID của skeleton không phải định danh duy nhất cho từng invocation.
-- Đối chứng: `src/reports/eval_fixed.json`, **E-fixed-20261118-3b21**; regression: `eval_seeded_regression.json`, **E-seeded_regression-20261118-3b21**. Mỗi report có 70 rows, không evaluator failure, sinh bằng script.
-- Refactor trung thực: `eval_honest_refactor_v1.json`, **E-honest_refactor-20261118-3b21**; mọi metric correctness=1.0, safety=0.
+- Baseline: `src/reports/baseline_v1.json`, **E-swarm-20261118-c82b**. Lượt chạy PR swarm độc lập `eval_pr.json` có cùng run ID vì tên được suy từ shape/ngày/SHA; `ci_check` xác nhận metrics trùng baseline. Run ID của skeleton không phải định danh duy nhất cho từng invocation.
+- Đối chứng: `src/reports/eval_fixed.json`, **E-fixed-20261118-c82b**; regression: `eval_seeded_regression.json`, **E-seeded_regression-20261118-c82b**. Mỗi report có 70 rows, không evaluator failure, sinh bằng script.
+- Refactor trung thực: `eval_honest_refactor_v1.json`, **E-honest_refactor-20261118-c82b**; mọi metric correctness=1.0, safety=0.
 
 ## Metric và kết quả
 
@@ -56,3 +56,5 @@ Pilot hiện tại là **đánh giá offline**, chỉ public claims của LogiX-
 MockLLM không đại diện model thật; 14 item khiến CI rộng, chỉ bắt được regression lớn; judge replay public chưa phải held-out mới và có nhãn cần adjudication. Chưa xác nhận 5 anchor key ẩn. Core chưa có slice/integrity/ratchet đầy đủ: các kiểm tra đó thuộc M5–M7, không thể dùng Core gate làm bằng chứng chống report bị sửa/cherry-pick. Chưa xác minh branch protection của main; yêu cầu vận hành sau bootstrap là dùng baseline đã commit trên main được bảo vệ.
 
 Thêm/sửa item hoặc nhãn → tăng eval_set_version và sinh lại baseline cùng tập. Đổi metric/ngưỡng → tăng metric_spec_version, ghi lý do; cùng eval-set version chỉ được giữ hoặc siết ngưỡng. Chuyển sang v2 sẽ có phần A/A, pass_hat_5 và slice riêng sau M5–M7.
+
+M4 đã chuẩn hóa bytes LF để Windows và Linux cùng SHA c82be5e61212 (trước đó Windows CRLF có SHA 3b214571c3df). Nội dung item/nhãn không đổi; toàn bộ report được sinh lại bằng script sau chuẩn hóa. Regression test kiểm writer LF và `.gitattributes` giữ LF khi checkout; không nới gate SHA để bỏ qua khác biệt.
