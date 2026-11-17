@@ -58,3 +58,7 @@ MockLLM không đại diện model thật; 14 item khiến CI rộng, chỉ bắ
 Thêm/sửa item hoặc nhãn → tăng eval_set_version và sinh lại baseline cùng tập. Đổi metric/ngưỡng → tăng metric_spec_version, ghi lý do; cùng eval-set version chỉ được giữ hoặc siết ngưỡng. Chuyển sang v2 sẽ có phần A/A, pass_hat_5 và slice riêng sau M5–M7.
 
 M4 đã chuẩn hóa bytes LF để Windows và Linux cùng SHA c82be5e61212 (trước đó Windows CRLF có SHA 3b214571c3df). Nội dung item/nhãn không đổi; toàn bộ report được sinh lại bằng script sau chuẩn hóa. Regression test kiểm writer LF và `.gitattributes` giữ LF khi checkout; không nới gate SHA để bỏ qua khác biệt.
+
+## Bằng chứng CI Core
+
+[PR #1](https://github.com/haianh020505/K5-L3B-DAY09-LeHaiAnh-2A202603986-EvaluationandFailureAnalysis/pull/1) vào main của fork; [CI run 44145323114](https://github.com/haianh020505/K5-L3B-DAY09-LeHaiAnh-2A202603986-EvaluationandFailureAnalysis/actions/runs/44145323114) SUCCESS trên Linux: 49 Core tests, smoke, evalset check, PR swarm, ci_check, fixed qua và seeded_regression bị chặn. Local có thêm 58 default tests passed. Job eval-gate-v2 chỉ bỏ qua phần đánh giá khi chưa có baseline_v2, không phải bằng chứng đạt M5–M7.
