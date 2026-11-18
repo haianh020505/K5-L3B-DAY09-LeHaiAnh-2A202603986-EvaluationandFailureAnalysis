@@ -1,0 +1,2 @@
+# Eval manifests hash raw bytes; keep checkout identical on Windows and Linux.
+src/data/eval/*.jsonl text eol=lf

@@ -1,0 +1,2 @@
+# Optional Task 8 only; Core/Advanced/Expert do not import Inspect.
+inspect-ai==0.3.290
