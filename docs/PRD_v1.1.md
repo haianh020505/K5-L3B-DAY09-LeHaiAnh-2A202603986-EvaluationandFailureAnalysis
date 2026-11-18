@@ -52,6 +52,7 @@ Quy tắc: tiền và phê duyệt luôn chấm bằng code. Judge chỉ dùng c
 - Baseline cần lấy từ main được bảo vệ, phủ đủ `item × seed`; eval_set_sha của PR phải trùng baseline. Ở PR bootstrap Core, baseline swarm được sinh và commit vào PR theo hướng dẫn lab; `ci_check` so với lượt swarm độc lập. Chưa xác minh cấu hình branch protection và không coi phép so này là cơ chế integrity hoàn chỉnh.
 - Gate exit 1 → **không merge phiên bản lỗi**. Eval owner của bài cá nhân: **Lê Hải Anh**. Không dùng waiver hoặc hạ ngưỡng trong bài; sửa nguyên nhân, tái sinh report, chạy lại test/gate.
 - CI `eval-gate` kiểm smoke, student Core tests, eval set, PR swarm, baseline/spec, fixed phải qua và seeded_regression phải bị chặn với lý do có pass_rate. Merge PR Core chỉ khi CI xanh; việc này không cấp quyền triển khai production.
+- M7: gate kiểm integrity trước metric/CI, chặn report thiếu/trùng item–seed, grader lỗi, điểm không hợp lệ, đổi slice hoặc aggregate không khớp rows. Ratchet cần `--base-spec` lấy từ nguồn tin cậy trước PR; cùng eval-set version không được nới ngưỡng hoặc bỏ metric/slice/blocking/significance. Bằng chứng local và các lệnh trap xem [eval card M7](eval_card.md).
 
 ## 6. Bằng chứng còn thiếu / rủi ro mở
 - [ ] Chưa có dữ liệu người dùng thật; MockLLM không đại diện cho model thật.
@@ -59,7 +60,7 @@ Quy tắc: tiền và phê duyệt luôn chấm bằng code. Judge chỉ dùng c
 - [ ] Judge replay trên CSV đã công khai, chưa có tập held-out mới.
 - [ ] Swarm không có event reply: metric FM-08 bằng 1.0 không chứng minh reply đúng; các variant có reply mới có bằng chứng tương ứng.
 - [ ] Parser reply hiện chỉ bao phủ các mẫu tiếng Việt/VND đã kiểm; cần fixture mới cho cách diễn đạt/ngôn ngữ mới.
-- [ ] Core chưa có slice gate, kiểm integrity và ratchet đầy đủ; làm tiếp M5–M7 trước khi tuyên bố chống cherry-pick/report bị làm đẹp.
+- [x] Đã bổ sung slice gate M5 và integrity/ratchet M7; 4/4 trap công khai bị chặn, mutation 3/3 và 0 báo nhầm. Chưa chứng minh được nguồn chạy thật nếu attacker sửa đồng bộ cả report/baseline/code; vẫn cần baseline/base-spec tin cậy và CI độc lập.
 - [ ] Chưa có key 5 anchor ẩn; chưa xác nhận kết quả bộ chấm ẩn.
 
 ## 7. Khi nào lên v1.2
@@ -67,6 +68,8 @@ Quy tắc: tiền và phê duyệt luôn chấm bằng code. Judge chỉ dùng c
 - Đổi ngưỡng hoặc metric → tăng `metric_spec_version`, ghi lý do ở đây.
 
 Spec 1.1 thêm blocking metric reply_amount_correct (FM-08) và proposal_amount_correct (C-013 cho thấy ledger đúng vẫn có proposal sai); không hạ các ngưỡng có sẵn. Khi chuyển eval v2, sinh baseline v2 và ghi kết quả A/A/slice/pass_hat_5 trong eval card.
+
+M5–M7 đã có kết quả local với eval set v2/spec 2.0: 120 test Lab 9 và 58 test mặc định passed, smoke/evalset v1/v2 sạch. Chưa commit/push/PR/merge hoặc chạy CI mới cho các thay đổi này theo yêu cầu người dùng; các bước tích hợp và nộp LMS do người dùng thực hiện. Bộ chấm ẩn và phê duyệt production vẫn ngoài phạm vi bằng chứng hiện có.
 
 ## Phê duyệt
 | Vai trò | Tên | Ngày |

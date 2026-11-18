@@ -10,9 +10,19 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 
-# Runtime output. Reports for grading (baseline_v1/v2, eval_fixed, eval_seeded_regression)
-# are committed with: git add -f reports/*.json
-src/reports/
+# Submission reports: README/SUBMISSION require script-generated top-level JSON.
+# Keep these visible to normal git add; ignore logs, trap fixtures and scratch output.
+/src/reports/*
+!/src/reports/*.json
+
+# Local planning, progress notes and source-import reference (not deliverables).
+/docs/superpowers/
+/docs/day8_source.md
+/docs/submission_review.local.md
+/graphify-out/
+/.superpowers/
+
+# Runtime output.
 traces/
 *.sqlite
 *.sqlite-*
